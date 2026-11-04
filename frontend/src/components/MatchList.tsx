@@ -1,9 +1,11 @@
 import { Fragment, useState } from 'react';
 import { formatDate } from '../format';
-import type { Match } from '../types';
+import type { Match, MatchCheck } from '../types';
+import { CheckBadge } from './OfficialCheck';
 
-export function MatchList({ matches }: { matches: Match[] }) {
+export function MatchList({ matches, checks }: { matches: Match[]; checks: MatchCheck[] }) {
   const [open, setOpen] = useState<string | null>(null);
+  const checkById = new Map(checks.map((check) => [check.externalId, check]));
 
   return (
     <table>
@@ -14,6 +16,7 @@ export function MatchList({ matches }: { matches: Match[] }) {
           <th>ID</th>
           <th>Confronto</th>
           <th>Vencedor (planilha)</th>
+          <th>Site oficial</th>
           <th />
         </tr>
       </thead>
@@ -31,6 +34,9 @@ export function MatchList({ matches }: { matches: Match[] }) {
                 </td>
                 <td>{match.winner ?? <span className="badge warning">sem resultado</span>}</td>
                 <td>
+                  <CheckBadge check={checkById.get(match.externalId)} />
+                </td>
+                <td>
                   <button className="link" onClick={() => setOpen(isOpen ? null : match.externalId)}>
                     {isOpen ? 'ocultar' : 'jogadores'}
                   </button>
@@ -38,7 +44,7 @@ export function MatchList({ matches }: { matches: Match[] }) {
               </tr>
               {isOpen && (
                 <tr className="details">
-                  <td colSpan={6}>
+                  <td colSpan={7}>
                     <div className="teams">
                       {[match.teamA, match.teamB].map((team) => (
                         <TeamPlayers key={team} team={team} match={match} />

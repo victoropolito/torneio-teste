@@ -3,12 +3,15 @@ import { api } from '../api';
 import { ImportReport } from '../components/ImportReport';
 import { IssueBadges } from '../components/IssueBadges';
 import { MatchList } from '../components/MatchList';
+import { OfficialCheck } from '../components/OfficialCheck';
 import { formatCents, formatDateTime } from '../format';
 import type { TournamentDetail } from '../types';
+import { useChecks } from '../useChecks';
 
 export function TournamentPage({ id }: { id: number }) {
   const [tournament, setTournament] = useState<TournamentDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const checks = useChecks(id);
 
   useEffect(() => {
     setTournament(null);
@@ -58,13 +61,18 @@ export function TournamentPage({ id }: { id: number }) {
       </section>
 
       <section className="card">
+        <h2>Conferência no site oficial</h2>
+        <OfficialCheck checks={checks.checks} error={checks.error} onRetry={checks.retry} />
+      </section>
+
+      <section className="card">
         <h2>Relatório da importação</h2>
         <ImportReport issues={tournament.issues} />
       </section>
 
       <section className="card">
         <h2>Partidas</h2>
-        <MatchList matches={tournament.matches} />
+        <MatchList matches={tournament.matches} checks={checks.checks?.matches ?? []} />
       </section>
     </>
   );

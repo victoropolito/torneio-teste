@@ -4,6 +4,8 @@ import path from 'node:path';
 import { AppError } from '../errors.js';
 import { readCsv } from '../import/csv.js';
 import { validateSheet } from '../import/validate.js';
+import { getTournamentChecks, requeueUnresolved } from '../official/repository.js';
+import { wakeCheckWorker } from '../official/worker.js';
 import { createTournament, getTournament, listTournaments } from './repository.js';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 2 * 1024 * 1024 } });
@@ -41,10 +43,28 @@ tournamentsRouter.get('/', (_req, res) => {
   res.json(listTournaments());
 });
 
-tournamentsRouter.get('/:id', (req, res) => {
-  const tournament = getTournament(Number(req.params.id));
+function findTournament(idParam: string) {
+  const tournament = getTournament(Number(idParam));
   if (!tournament) throw new AppError('Torneio não encontrado.', 404);
-  res.json(tournament);
+  return tournament;
+}
+
+tournamentsRouter.get('/:id', (req, res) => {
+  res.json(findTournament(req.params.id));
+});
+
+/** Andamento da conferência no site oficial (o front consulta periodicamente). */
+tournamentsRouter.get('/:id/checks', (req, res) => {
+  const { id } = findTournament(req.params.id);
+  res.json(getTournamentChecks(id));
+});
+
+/** Recoloca na fila as partidas que falharam ou não foram encontradas no site. */
+tournamentsRouter.post('/:id/checks/retry', (req, res) => {
+  const { id } = findTournament(req.params.id);
+  const requeued = requeueUnresolved(id);
+  wakeCheckWorker();
+  res.json({ requeued, ...getTournamentChecks(id) });
 });
 
 tournamentsRouter.post('/', upload.single('file'), (req, res) => {
@@ -66,5 +86,6 @@ tournamentsRouter.post('/', upload.single('file'), (req, res) => {
   }
 
   const id = createTournament({ name, sourceFilename, prizeTotalCents, prizeSplit }, result);
+  wakeCheckWorker();
   res.status(201).json({ ...getTournament(id), stats: result.stats });
 });

@@ -48,4 +48,29 @@ db.exec(`
     line              INTEGER,          -- linha na planilha (cabeçalho = 1)
     match_external_id TEXT
   );
+
+  -- Conferência de cada partida no site oficial (fila persistente).
+  CREATE TABLE IF NOT EXISTS match_checks (
+    match_id        INTEGER PRIMARY KEY REFERENCES matches(id) ON DELETE CASCADE,
+    status          TEXT    NOT NULL DEFAULT 'pending'
+                    CHECK (status IN ('pending', 'running', 'ok', 'divergent', 'not_found', 'failed')),
+    attempts        INTEGER NOT NULL DEFAULT 0,
+    next_attempt_at INTEGER NOT NULL DEFAULT 0, -- epoch em ms; só vale para 'pending'
+    last_error      TEXT,
+    checked_at      TEXT,                       -- última resposta definitiva do site
+    official_data   TEXT                        -- JSON (OfficialMatch) quando encontrada
+  );
+
+  CREATE TABLE IF NOT EXISTS check_discrepancies (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    match_id       INTEGER NOT NULL REFERENCES matches(id) ON DELETE CASCADE,
+    code           TEXT    NOT NULL,
+    message        TEXT    NOT NULL,
+    nick           TEXT,
+    sheet_value    TEXT,
+    official_value TEXT
+  );
+
+  -- Torneios importados antes da Entrega 3 também entram na fila.
+  INSERT OR IGNORE INTO match_checks (match_id) SELECT id FROM matches;
 `);

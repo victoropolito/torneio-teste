@@ -40,3 +40,30 @@ export interface TournamentDetail extends TournamentSummary {
   matches: Match[];
   issues: ImportIssue[];
 }
+
+export type CheckStatus = 'pending' | 'running' | 'ok' | 'divergent' | 'not_found' | 'failed';
+
+export interface Discrepancy {
+  code: string;
+  message: string;
+  nick?: string;
+  sheetValue?: string;
+  officialValue?: string;
+}
+
+export interface MatchCheck {
+  externalId: string;
+  status: CheckStatus;
+  attempts: number;
+  lastError: string | null;
+  checkedAt: string | null;
+  nextAttemptAt: number | null;
+  discrepancies: Discrepancy[];
+}
+
+export interface TournamentChecks {
+  counts: Record<CheckStatus, number>;
+  total: number;
+  finished: boolean;
+  matches: MatchCheck[];
+}

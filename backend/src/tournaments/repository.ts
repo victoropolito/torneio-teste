@@ -85,6 +85,7 @@ export const createTournament = db.transaction((input: NewTournament, result: Im
   const insertPlayer = db.prepare(
     `INSERT INTO match_players (match_id, team, nick, minutes, kills) VALUES (?, ?, ?, ?, ?)`,
   );
+  const insertCheck = db.prepare(`INSERT INTO match_checks (match_id) VALUES (?)`);
   const insertIssue = db.prepare(
     `INSERT INTO import_issues (tournament_id, severity, code, message, line, match_external_id)
      VALUES (?, ?, ?, ?, ?, ?)`,
@@ -94,6 +95,7 @@ export const createTournament = db.transaction((input: NewTournament, result: Im
     const matchId = insertMatch.run(
       tournamentId, match.externalId, match.round, match.playedOn, match.teamA, match.teamB, match.winner,
     ).lastInsertRowid;
+    insertCheck.run(matchId);
     for (const player of match.players) {
       insertPlayer.run(matchId, player.team, player.nick, player.minutes, player.kills);
     }

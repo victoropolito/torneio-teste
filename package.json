@@ -3,11 +3,12 @@
   "private": true,
   "workspaces": [
     "backend",
-    "frontend"
+    "frontend",
+    "mock-official"
   ],
   "scripts": {
-    "dev": "concurrently -n back,front -c blue,green \"npm run dev -w backend\" \"npm run dev -w frontend\"",
-    "build": "npm run build -w backend && npm run build -w frontend"
+    "dev": "concurrently -n back,front,oficial -c blue,green,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\" \"npm run dev -w mock-official\"",
+    "build": "npm run build -w mock-official && npm run build -w backend && npm run build -w frontend"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"

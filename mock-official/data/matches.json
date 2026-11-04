@@ -1,0 +1,964 @@
+{
+  "40446": {
+    "matchId": "40446",
+    "playedAt": "2026-09-12",
+    "teams": [
+      {
+        "name": "Serpentes",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Kaio_BR",
+            "minutesPlayed": 36,
+            "kills": 7
+          },
+          {
+            "nickname": "Naja",
+            "minutesPlayed": 36,
+            "kills": 16
+          },
+          {
+            "nickname": "Víbora",
+            "minutesPlayed": 36,
+            "kills": 12
+          },
+          {
+            "nickname": "Cobrinha",
+            "minutesPlayed": 36,
+            "kills": 17
+          },
+          {
+            "nickname": "Bote",
+            "minutesPlayed": 36,
+            "kills": 2
+          }
+        ]
+      },
+      {
+        "name": "Corvos",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Bia.gg",
+            "minutesPlayed": 36,
+            "kills": 15
+          },
+          {
+            "nickname": "Corvinho",
+            "minutesPlayed": 36,
+            "kills": 7
+          },
+          {
+            "nickname": "M4theus",
+            "minutesPlayed": 36,
+            "kills": 6
+          },
+          {
+            "nickname": "Zeca",
+            "minutesPlayed": 36,
+            "kills": 24
+          },
+          {
+            "nickname": "Nina.exe",
+            "minutesPlayed": 36,
+            "kills": 26
+          }
+        ]
+      }
+    ]
+  },
+  "40537": {
+    "matchId": "40537",
+    "playedAt": "2026-09-13",
+    "teams": [
+      {
+        "name": "Lobos",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "xXSniperXx",
+            "minutesPlayed": 40,
+            "kills": 15
+          },
+          {
+            "nickname": "Dona.Tank",
+            "minutesPlayed": 40,
+            "kills": 7
+          },
+          {
+            "nickname": "Pipoca",
+            "minutesPlayed": 40,
+            "kills": 8
+          },
+          {
+            "nickname": "R4mbo",
+            "minutesPlayed": 40,
+            "kills": 8
+          },
+          {
+            "nickname": "Lua_",
+            "minutesPlayed": 40,
+            "kills": 17
+          }
+        ]
+      },
+      {
+        "name": "Tubarões",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Tubarao01",
+            "minutesPlayed": 40,
+            "kills": 2
+          },
+          {
+            "nickname": "Hanzo_BR",
+            "minutesPlayed": 40,
+            "kills": 1
+          },
+          {
+            "nickname": "Gabs",
+            "minutesPlayed": 40,
+            "kills": 12
+          },
+          {
+            "nickname": "Ferrugem",
+            "minutesPlayed": 40,
+            "kills": 10
+          },
+          {
+            "nickname": "Ju.lia",
+            "minutesPlayed": 40,
+            "kills": 18
+          }
+        ]
+      }
+    ]
+  },
+  "40923": {
+    "matchId": "40923",
+    "playedAt": "2026-09-19",
+    "teams": [
+      {
+        "name": "Falcões",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Falk",
+            "minutesPlayed": 33,
+            "kills": 9
+          },
+          {
+            "nickname": "Kiwi",
+            "minutesPlayed": 33,
+            "kills": 11
+          },
+          {
+            "nickname": "Dudu.pro",
+            "minutesPlayed": 33,
+            "kills": 7
+          },
+          {
+            "nickname": "Marreta",
+            "minutesPlayed": 33,
+            "kills": 14
+          },
+          {
+            "nickname": "Sol",
+            "minutesPlayed": 33,
+            "kills": 8
+          }
+        ]
+      },
+      {
+        "name": "Panteras",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Sombra",
+            "minutesPlayed": 33,
+            "kills": 19
+          },
+          {
+            "nickname": "Pantera_X",
+            "minutesPlayed": 33,
+            "kills": 12
+          },
+          {
+            "nickname": "Mel",
+            "minutesPlayed": 33,
+            "kills": 16
+          },
+          {
+            "nickname": "Tchê",
+            "minutesPlayed": 33,
+            "kills": 10
+          },
+          {
+            "nickname": "Rafa.K",
+            "minutesPlayed": 33,
+            "kills": 13
+          }
+        ]
+      }
+    ]
+  },
+  "43337": {
+    "matchId": "43337",
+    "playedAt": "2026-09-12",
+    "teams": [
+      {
+        "name": "Panteras",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Sombra",
+            "minutesPlayed": 37,
+            "kills": 2
+          },
+          {
+            "nickname": "Pantera_X",
+            "minutesPlayed": 37,
+            "kills": 15
+          },
+          {
+            "nickname": "Mel",
+            "minutesPlayed": 37,
+            "kills": 15
+          },
+          {
+            "nickname": "Tchê",
+            "minutesPlayed": 37,
+            "kills": 12
+          },
+          {
+            "nickname": "Rafa.K",
+            "minutesPlayed": 37,
+            "kills": 13
+          }
+        ]
+      },
+      {
+        "name": "Tubarões",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Tubarao01",
+            "minutesPlayed": 37,
+            "kills": 5
+          },
+          {
+            "nickname": "Hanzo_BR",
+            "minutesPlayed": 37,
+            "kills": 12
+          },
+          {
+            "nickname": "Gabs",
+            "minutesPlayed": 37,
+            "kills": 9
+          },
+          {
+            "nickname": "Ferrugem",
+            "minutesPlayed": 37,
+            "kills": 18
+          },
+          {
+            "nickname": "Ju.lia",
+            "minutesPlayed": 37,
+            "kills": 22
+          }
+        ]
+      }
+    ]
+  },
+  "43432": {
+    "matchId": "43432",
+    "playedAt": "2026-09-13",
+    "teams": [
+      {
+        "name": "Panteras",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Sombra",
+            "minutesPlayed": 35,
+            "kills": 8
+          },
+          {
+            "nickname": "Pantera_X",
+            "minutesPlayed": 35,
+            "kills": 15
+          },
+          {
+            "nickname": "Mel",
+            "minutesPlayed": 35,
+            "kills": 6
+          },
+          {
+            "nickname": "Tchê",
+            "minutesPlayed": 35,
+            "kills": 22
+          },
+          {
+            "nickname": "Rafa.K",
+            "minutesPlayed": 35,
+            "kills": 21
+          }
+        ]
+      },
+      {
+        "name": "Serpentes",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Kaio_BR",
+            "minutesPlayed": 35,
+            "kills": 8
+          },
+          {
+            "nickname": "Naja",
+            "minutesPlayed": 35,
+            "kills": 16
+          },
+          {
+            "nickname": "Víbora",
+            "minutesPlayed": 35,
+            "kills": 8
+          },
+          {
+            "nickname": "Cobrinha",
+            "minutesPlayed": 35,
+            "kills": 6
+          },
+          {
+            "nickname": "Bote",
+            "minutesPlayed": 35,
+            "kills": 10
+          }
+        ]
+      }
+    ]
+  },
+  "44027": {
+    "matchId": "44027",
+    "playedAt": "2026-09-06",
+    "teams": [
+      {
+        "name": "Serpentes",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Kaio_BR",
+            "minutesPlayed": 35,
+            "kills": 3
+          },
+          {
+            "nickname": "Naja",
+            "minutesPlayed": 35,
+            "kills": 18
+          },
+          {
+            "nickname": "Víbora",
+            "minutesPlayed": 35,
+            "kills": 18
+          },
+          {
+            "nickname": "Cobrinha",
+            "minutesPlayed": 35,
+            "kills": 15
+          },
+          {
+            "nickname": "Bote",
+            "minutesPlayed": 35,
+            "kills": 9
+          }
+        ]
+      },
+      {
+        "name": "Falcões",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Falk",
+            "minutesPlayed": 35,
+            "kills": 14
+          },
+          {
+            "nickname": "Kiwi",
+            "minutesPlayed": 35,
+            "kills": 4
+          },
+          {
+            "nickname": "Dudu.pro",
+            "minutesPlayed": 35,
+            "kills": 12
+          },
+          {
+            "nickname": "Marreta",
+            "minutesPlayed": 35,
+            "kills": 13
+          },
+          {
+            "nickname": "Sol",
+            "minutesPlayed": 35,
+            "kills": 20
+          }
+        ]
+      }
+    ]
+  },
+  "44040": {
+    "matchId": "44040",
+    "playedAt": "2026-09-05",
+    "teams": [
+      {
+        "name": "Corvos",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Bia.gg",
+            "minutesPlayed": 28,
+            "kills": 10
+          },
+          {
+            "nickname": "Corvinho",
+            "minutesPlayed": 28,
+            "kills": 21
+          },
+          {
+            "nickname": "M4theus",
+            "minutesPlayed": 28,
+            "kills": 24
+          },
+          {
+            "nickname": "Zeca",
+            "minutesPlayed": 28,
+            "kills": 24
+          },
+          {
+            "nickname": "Nina.exe",
+            "minutesPlayed": 28,
+            "kills": 16
+          }
+        ]
+      },
+      {
+        "name": "Panteras",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Sombra",
+            "minutesPlayed": 28,
+            "kills": 17
+          },
+          {
+            "nickname": "Pantera_X",
+            "minutesPlayed": 28,
+            "kills": 11
+          },
+          {
+            "nickname": "Mel",
+            "minutesPlayed": 28,
+            "kills": 14
+          },
+          {
+            "nickname": "Tchê",
+            "minutesPlayed": 28,
+            "kills": 5
+          },
+          {
+            "nickname": "Rafa.K",
+            "minutesPlayed": 28,
+            "kills": 9
+          }
+        ]
+      }
+    ]
+  },
+  "45659": {
+    "matchId": "45659",
+    "playedAt": "2026-09-05",
+    "teams": [
+      {
+        "name": "Lobos",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "xXSniperXx",
+            "minutesPlayed": 43,
+            "kills": 25
+          },
+          {
+            "nickname": "Dona.Tank",
+            "minutesPlayed": 43,
+            "kills": 25
+          },
+          {
+            "nickname": "Pipoca",
+            "minutesPlayed": 43,
+            "kills": 6
+          },
+          {
+            "nickname": "R4mbo",
+            "minutesPlayed": 43,
+            "kills": 5
+          },
+          {
+            "nickname": "Lua_",
+            "minutesPlayed": 43,
+            "kills": 14
+          }
+        ]
+      },
+      {
+        "name": "Serpentes",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Kaio_BR",
+            "minutesPlayed": 43,
+            "kills": 8
+          },
+          {
+            "nickname": "Naja",
+            "minutesPlayed": 43,
+            "kills": 1
+          },
+          {
+            "nickname": "Víbora",
+            "minutesPlayed": 43,
+            "kills": 18
+          },
+          {
+            "nickname": "Cobrinha",
+            "minutesPlayed": 43,
+            "kills": 12
+          },
+          {
+            "nickname": "Bote",
+            "minutesPlayed": 43,
+            "kills": 11
+          }
+        ]
+      }
+    ]
+  },
+  "46065": {
+    "matchId": "46065",
+    "playedAt": "2026-09-06",
+    "teams": [
+      {
+        "name": "Lobos",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "xXSniperXx",
+            "minutesPlayed": 42,
+            "kills": 21
+          },
+          {
+            "nickname": "Dona.Tank",
+            "minutesPlayed": 42,
+            "kills": 6
+          },
+          {
+            "nickname": "Pipoca",
+            "minutesPlayed": 42,
+            "kills": 17
+          },
+          {
+            "nickname": "R4mbo",
+            "minutesPlayed": 42,
+            "kills": 10
+          },
+          {
+            "nickname": "Lua_",
+            "minutesPlayed": 42,
+            "kills": 11
+          }
+        ]
+      },
+      {
+        "name": "Panteras",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Sombra",
+            "minutesPlayed": 42,
+            "kills": 9
+          },
+          {
+            "nickname": "Pantera_X",
+            "minutesPlayed": 42,
+            "kills": 8
+          },
+          {
+            "nickname": "Mel",
+            "minutesPlayed": 42,
+            "kills": 13
+          },
+          {
+            "nickname": "Tchê",
+            "minutesPlayed": 42,
+            "kills": 6
+          },
+          {
+            "nickname": "Rafa.K",
+            "minutesPlayed": 42,
+            "kills": 3
+          }
+        ]
+      }
+    ]
+  },
+  "46903": {
+    "matchId": "46903",
+    "playedAt": "2026-09-06",
+    "teams": [
+      {
+        "name": "Corvos",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Bia.gg",
+            "minutesPlayed": 18,
+            "kills": 22
+          },
+          {
+            "nickname": "Tuca",
+            "minutesPlayed": 19,
+            "kills": 5
+          },
+          {
+            "nickname": "Corvinho",
+            "minutesPlayed": 37,
+            "kills": 4
+          },
+          {
+            "nickname": "M4theus",
+            "minutesPlayed": 37,
+            "kills": 24
+          },
+          {
+            "nickname": "Zeca",
+            "minutesPlayed": 37,
+            "kills": 22
+          },
+          {
+            "nickname": "Nina.exe",
+            "minutesPlayed": 37,
+            "kills": 19
+          }
+        ]
+      },
+      {
+        "name": "Tubarões",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Tubarao01",
+            "minutesPlayed": 37,
+            "kills": 2
+          },
+          {
+            "nickname": "Hanzo_BR",
+            "minutesPlayed": 37,
+            "kills": 9
+          },
+          {
+            "nickname": "Gabs",
+            "minutesPlayed": 37,
+            "kills": 14
+          },
+          {
+            "nickname": "Ferrugem",
+            "minutesPlayed": 37,
+            "kills": 14
+          },
+          {
+            "nickname": "Ju.lia",
+            "minutesPlayed": 37,
+            "kills": 4
+          }
+        ]
+      }
+    ]
+  },
+  "48087": {
+    "matchId": "48087",
+    "playedAt": "2026-09-12",
+    "teams": [
+      {
+        "name": "Lobos",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "xXSniperXx",
+            "minutesPlayed": 45,
+            "kills": 21
+          },
+          {
+            "nickname": "Dona.Tank",
+            "minutesPlayed": 45,
+            "kills": 5
+          },
+          {
+            "nickname": "Pipoca",
+            "minutesPlayed": 39,
+            "kills": 20
+          },
+          {
+            "nickname": "R4mbo",
+            "minutesPlayed": 45,
+            "kills": 26
+          },
+          {
+            "nickname": "Lua_",
+            "minutesPlayed": 45,
+            "kills": 26
+          }
+        ]
+      },
+      {
+        "name": "Falcões",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Falk",
+            "minutesPlayed": 45,
+            "kills": 3
+          },
+          {
+            "nickname": "Kiwi",
+            "minutesPlayed": 45,
+            "kills": 17
+          },
+          {
+            "nickname": "Dudu.pro",
+            "minutesPlayed": 45,
+            "kills": 1
+          },
+          {
+            "nickname": "Marreta",
+            "minutesPlayed": 45,
+            "kills": 4
+          },
+          {
+            "nickname": "Sol",
+            "minutesPlayed": 45,
+            "kills": 9
+          }
+        ]
+      }
+    ]
+  },
+  "48450": {
+    "matchId": "48450",
+    "playedAt": "2026-09-19",
+    "teams": [
+      {
+        "name": "Lobos",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "xXSniperXx",
+            "minutesPlayed": 41,
+            "kills": 7
+          },
+          {
+            "nickname": "Dona.Tank",
+            "minutesPlayed": 41,
+            "kills": 7
+          },
+          {
+            "nickname": "Pipoca",
+            "minutesPlayed": 41,
+            "kills": 16
+          },
+          {
+            "nickname": "R4mbo",
+            "minutesPlayed": 41,
+            "kills": 10
+          },
+          {
+            "nickname": "Lua_",
+            "minutesPlayed": 41,
+            "kills": 20
+          }
+        ]
+      },
+      {
+        "name": "Corvos",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Bia.gg",
+            "minutesPlayed": 41,
+            "kills": 3
+          },
+          {
+            "nickname": "Corvinho",
+            "minutesPlayed": 41,
+            "kills": 8
+          },
+          {
+            "nickname": "M4theus",
+            "minutesPlayed": 41,
+            "kills": 6
+          },
+          {
+            "nickname": "Zeca",
+            "minutesPlayed": 41,
+            "kills": 1
+          },
+          {
+            "nickname": "Nina.exe",
+            "minutesPlayed": 41,
+            "kills": 10
+          }
+        ]
+      }
+    ]
+  },
+  "48499": {
+    "matchId": "48499",
+    "playedAt": "2026-09-13",
+    "teams": [
+      {
+        "name": "Falcões",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Falk",
+            "minutesPlayed": 31,
+            "kills": 23
+          },
+          {
+            "nickname": "Kiwi",
+            "minutesPlayed": 31,
+            "kills": 17
+          },
+          {
+            "nickname": "Dudu.pro",
+            "minutesPlayed": 31,
+            "kills": 20
+          },
+          {
+            "nickname": "Marreta",
+            "minutesPlayed": 31,
+            "kills": 23
+          },
+          {
+            "nickname": "Sol",
+            "minutesPlayed": 31,
+            "kills": 6
+          }
+        ]
+      },
+      {
+        "name": "Corvos",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Bia.gg",
+            "minutesPlayed": 31,
+            "kills": 12
+          },
+          {
+            "nickname": "Corvinho",
+            "minutesPlayed": 31,
+            "kills": 15
+          },
+          {
+            "nickname": "M4theus",
+            "minutesPlayed": 31,
+            "kills": 17
+          },
+          {
+            "nickname": "Zeca",
+            "minutesPlayed": 31,
+            "kills": 17
+          },
+          {
+            "nickname": "Nina.exe",
+            "minutesPlayed": 31,
+            "kills": 10
+          }
+        ]
+      }
+    ]
+  },
+  "49528": {
+    "matchId": "49528",
+    "playedAt": "2026-09-19",
+    "teams": [
+      {
+        "name": "Tubarões",
+        "result": "win",
+        "players": [
+          {
+            "nickname": "Tubarao01",
+            "minutesPlayed": 34,
+            "kills": 17
+          },
+          {
+            "nickname": "Hanzo_BR",
+            "minutesPlayed": 34,
+            "kills": 17
+          },
+          {
+            "nickname": "Gabs",
+            "minutesPlayed": 34,
+            "kills": 22
+          },
+          {
+            "nickname": "Ferrugem",
+            "minutesPlayed": 34,
+            "kills": 16
+          },
+          {
+            "nickname": "Ju.lia",
+            "minutesPlayed": 34,
+            "kills": 14
+          }
+        ]
+      },
+      {
+        "name": "Serpentes",
+        "result": "loss",
+        "players": [
+          {
+            "nickname": "Kaio_BR",
+            "minutesPlayed": 34,
+            "kills": 4
+          },
+          {
+            "nickname": "Naja",
+            "minutesPlayed": 20,
+            "kills": 5
+          },
+          {
+            "nickname": "Víbora",
+            "minutesPlayed": 34,
+            "kills": 3
+          },
+          {
+            "nickname": "Cobrinha",
+            "minutesPlayed": 34,
+            "kills": 18
+          },
+          {
+            "nickname": "Bote",
+            "minutesPlayed": 34,
+            "kills": 1
+          },
+          {
+            "nickname": "Sucuri",
+            "minutesPlayed": 14,
+            "kills": 3
+          }
+        ]
+      }
+    ]
+  }
+}

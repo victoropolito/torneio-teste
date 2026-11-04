@@ -251,3 +251,27 @@ button.link {
   margin: 2px 0 0;
   font-weight: 500;
 }
+
+h3 {
+  margin: 20px 0 8px;
+  font-size: 15px;
+}
+
+.progress-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.progress {
+  flex: 0 0 240px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.3s;
+}
