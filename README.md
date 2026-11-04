@@ -4,7 +4,7 @@ Sistema para a Maria Clara subir a planilha do torneio, ter cada partida conferi
 
 - **Importação da planilha** (CSV exportado do Excel): corrige o que tem correção óbvia (duplicatas, nick com maiúsculas diferentes, ID sem `#`), rejeita só o que é realmente inválido e mostra um relatório linha a linha.
 - **Conferência no site oficial em background**: as partidas entram numa fila, são consultadas com concorrência limitada, timeout e novas tentativas com backoff. O progresso aparece na tela em tempo real e cada divergência mostra "planilha diz X, site diz Y".
-- **Classificação e prêmios**: classificação por vitórias com desempate (confronto direto → saldo de kills → menos jogadores utilizados → divisão igual). Prêmio por jogador por **minutos** ou por **kills**, com os dois valores lado a lado, busca por nick e um "por quê?" com a conta escrita para responder no Discord.
+- **Classificação e prêmios**: classificação por vitórias com desempate (confronto direto → saldo de kills → menos jogadores utilizados → divisão igual). Prêmio por jogador por **minutos** ou por **kills**, com os dois valores lado a lado, busca por nick e, em cada jogador, uma explicação expansível com a conta escrita para responder. Todas as tabelas ordenam por coluna; jogadores e partidas são paginados.
 - **Site oficial simulado**: um serviço HTTP separado que demora de 2 a 10 s, às vezes cai e às vezes não responde. Tem divergências plantadas de propósito em relação à planilha.
 
 As decisões, as alternativas descartadas e o que ficou de fora estão em **[DECISIONS.md](DECISIONS.md)**.

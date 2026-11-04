@@ -149,7 +149,7 @@ Enquanto houver partida não conferida ou sem vencedor, **todos** os valores sã
 
 ### Transparência
 
-Cada jogador tem um "por quê?" com a conta escrita, por exemplo: "Corvos terminou em 2º lugar e ficou com R$ 3.000,00 (30%). O valor do time é dividido pelos minutos jogados: Bia.gg jogou 154 dos 865 minutos do time (17,8%), em 5 partidas, e recebe R$ 534,10." Ela pode colar esse texto no Discord.
+Cada jogador tem uma linha expansível (seta ao lado do valor) com a conta escrita, por exemplo: "Corvos terminou em 2º lugar e ficou com R$ 3.000,00 (30%). O valor do time é dividido pelos minutos jogados: Bia.gg jogou 154 dos 865 minutos do time (17,8%), em 5 partidas, e recebe R$ 534,10." Ela pode colar esse texto no Discord.
 
 ---
 
@@ -157,6 +157,11 @@ Cada jogador tem um "por quê?" com a conta escrita, por exemplo: "Corvos termin
 
 - Duas telas: lista/upload e torneio. A tela do torneio segue a ordem do que ela quer saber: **prêmios** → conferência → relatório da importação → partidas.
 - Busca por nick ou time sem diferenciar acento nem caixa ("tche" encontra "Tchê").
+- Ordenação por coluna em todas as tabelas. No 1º clique, números vão do maior para o menor (posição, rodada e linha começam do 1º) e textos de A a Z; o 2º clique inverte e o 3º volta à ordem original. Vazios ficam sempre no fim.
+- Paginação só onde a lista cresce com o torneio: jogadores (20 por página) e partidas (15). Filtrar ou reordenar volta para a página 1. Classificação e relatórios ficam inteiros, porque são curtos e ver tudo de uma vez é o ponto.
+  - **Descartado:** paginação no servidor. Com algumas dezenas de linhas, o back já devolve tudo num JSON pequeno; paginar no front mantém busca e ordenação instantâneas.
+- Prêmio digitado com máscara de moeda (dígitos entram pela direita, como em maquininha) e guardado em centavos, como o resto do sistema.
+- Seletor de arquivo próprio: o texto nativo do navegador ("Nenhum arquivo escolhido") não é estilizável nem controlável. O próprio permite mostrar o nome do arquivo e removê-lo.
 - Roteamento por hash (`#/torneios/:id`) em vez de react-router, porque são só duas telas.
 - Sem biblioteca de componentes nem de estado: CSS próprio e `useState`/`useEffect`.
 

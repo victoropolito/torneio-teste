@@ -48,14 +48,16 @@ export function Results({ tournamentId, refreshKey }: Props) {
     <>
       {results.provisional ? (
         <div className="banner warning">
-          <strong>Valores provisórios.</strong> Ainda não foi possível confirmar{' '}
-          {results.pendingMatches.length === 1 ? 'esta partida' : `${results.pendingMatches.length} partidas`} no
-          site oficial: {results.pendingMatches.map((p) => `${p.externalId} (${p.reason})`).join(', ')}. Elas foram
-          calculadas com os dados da planilha, e como podem mudar a classificação, todos os valores podem mudar.
+          <div>
+            <strong>Valores provisórios.</strong> Ainda não foi possível confirmar{' '}
+            {results.pendingMatches.length === 1 ? 'esta partida' : `${results.pendingMatches.length} partidas`} no site
+            oficial: {results.pendingMatches.map((p) => `${p.externalId} (${p.reason})`).join(', ')}. Elas foram
+            calculadas com os dados da planilha, e como podem mudar a classificação, todos os valores podem mudar.
+          </div>
         </div>
       ) : (
         <div className="banner ok">
-          Todas as {results.sources.official} partidas foram conferidas no site oficial. Valores finais.
+          <div>Todas as {results.sources.official} partidas foram conferidas no site oficial. Valores finais.</div>
         </div>
       )}
       {error && <p className="error small">{error}</p>}

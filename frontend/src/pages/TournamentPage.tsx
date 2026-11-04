@@ -20,7 +20,10 @@ export function TournamentPage({ id }: { id: number }) {
   useEffect(() => {
     setTournament(null);
     setError(null);
-    api.getTournament(id).then(setTournament).catch((err: Error) => setError(err.message));
+    api
+      .getTournament(id)
+      .then(setTournament)
+      .catch((err: Error) => setError(err.message));
   }, [id]);
 
   if (error) return <p className="error">{error}</p>;
@@ -28,34 +31,28 @@ export function TournamentPage({ id }: { id: number }) {
 
   return (
     <>
-      <section className="card">
-        <a href="#" className="small">
-          ← voltar
+      <section className="page-header">
+        <a href="#" className="back-link">
+          ← Todos os torneios
         </a>
         <h1>{tournament.name}</h1>
-        <dl className="summary">
-          <div>
-            <dt>Planilha</dt>
-            <dd>{tournament.sourceFilename}</dd>
+        <p className="muted small">
+          {tournament.sourceFilename} · importado em {formatDateTime(tournament.createdAt)}
+        </p>
+        <dl className="stats">
+          <div className="stat">
+            <dt>Prêmio total</dt>
+            <dd>{formatCents(tournament.prizeTotalCents)}</dd>
           </div>
-          <div>
-            <dt>Importado em</dt>
-            <dd>{formatDateTime(tournament.createdAt)}</dd>
+          <div className="stat">
+            <dt>Divisão</dt>
+            <dd>{tournament.prizeSplit.map((percent, i) => `${i + 1}º ${percent}%`).join(' · ')}</dd>
           </div>
-          <div>
+          <div className="stat">
             <dt>Partidas</dt>
             <dd>{tournament.matchCount}</dd>
           </div>
-          <div>
-            <dt>Prêmio</dt>
-            <dd>
-              {formatCents(tournament.prizeTotalCents)}{' '}
-              <span className="muted">
-                ({tournament.prizeSplit.map((percent, i) => `${i + 1}º ${percent}%`).join(' · ')})
-              </span>
-            </dd>
-          </div>
-          <div>
+          <div className="stat">
             <dt>Importação</dt>
             <dd>
               <IssueBadges counts={tournament.issueCounts} />
@@ -65,22 +62,34 @@ export function TournamentPage({ id }: { id: number }) {
       </section>
 
       <section className="card">
-        <h2>Prêmios</h2>
+        <header className="card-header">
+          <h2>Prêmios</h2>
+          <p className="muted small">Classificação final e quanto cada jogador recebe.</p>
+        </header>
         <Results tournamentId={id} refreshKey={resultsKey} />
       </section>
 
       <section className="card">
-        <h2>Conferência no site oficial</h2>
+        <header className="card-header">
+          <h2>Conferência no site oficial</h2>
+          <p className="muted small">Cada partida da planilha comparada com o registro oficial do jogo.</p>
+        </header>
         <OfficialCheck checks={checks.checks} error={checks.error} onRetry={checks.retry} />
       </section>
 
       <section className="card">
-        <h2>Relatório da importação</h2>
+        <header className="card-header">
+          <h2>Relatório da importação</h2>
+          <p className="muted small">O que foi corrigido, interpretado ou descartado ao ler a planilha.</p>
+        </header>
         <ImportReport issues={tournament.issues} />
       </section>
 
       <section className="card">
-        <h2>Partidas</h2>
+        <header className="card-header">
+          <h2>Partidas</h2>
+          <p className="muted small">Como estão na planilha. Abra uma partida para ver os jogadores.</p>
+        </header>
         <MatchList matches={tournament.matches} checks={checks.checks?.matches ?? []} />
       </section>
     </>

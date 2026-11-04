@@ -2,8 +2,11 @@ import { Fragment, useState } from 'react';
 import { formatDate } from '../format';
 import type { Match, MatchCheck } from '../types';
 import { ExpandButton } from './ExpandButton';
+import { Pagination, usePagination } from './Pagination';
 import { CHECK_LABEL, CheckBadge } from './OfficialCheck';
 import { SortTh, useSort } from './Sortable';
+
+const PAGE_SIZE = 15;
 
 export function MatchList({ matches, checks }: { matches: Match[]; checks: MatchCheck[] }) {
   const [open, setOpen] = useState<string | null>(null);
@@ -21,74 +24,80 @@ export function MatchList({ matches, checks }: { matches: Match[]; checks: Match
     winner: (m) => m.winner,
     check: checkStatus,
   });
+  const page = usePagination(rows, PAGE_SIZE, `${sorter.sort?.key}|${sorter.sort?.dir}`);
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <SortTh sorter={sorter} column="id">
-            ID
-          </SortTh>
-          <SortTh sorter={sorter} column="round" className="num">
-            Rodada
-          </SortTh>
-          <SortTh sorter={sorter} column="date">
-            Data
-          </SortTh>
-          <SortTh sorter={sorter} column="matchup">
-            Confronto
-          </SortTh>
-          <SortTh sorter={sorter} column="winner">
-            Vencedor (planilha)
-          </SortTh>
-          <SortTh sorter={sorter} column="check">
-            Site oficial
-          </SortTh>
-          <th className="expand-col" />
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((match) => {
-          const isOpen = open === match.externalId;
-          return (
-            <Fragment key={match.externalId}>
-              <tr>
-                <td>
-                  <strong>{match.externalId}</strong>
-                </td>
-                <td className="num">{match.round}</td>
-                <td>{formatDate(match.playedOn)}</td>
-                <td>
-                  {match.teamA} x {match.teamB}
-                </td>
-                <td>{match.winner ?? <span className="badge warning">sem resultado</span>}</td>
-                <td>
-                  <CheckBadge check={checkById.get(match.externalId)} />
-                </td>
-                <td className="expand-col">
-                  <ExpandButton
-                    open={isOpen}
-                    onClick={() => setOpen(isOpen ? null : match.externalId)}
-                    label="jogadores da partida"
-                  />
-                </td>
-              </tr>
-              {isOpen && (
-                <tr className="details">
-                  <td colSpan={7}>
-                    <div className="teams">
-                      {[match.teamA, match.teamB].map((team) => (
-                        <TeamPlayers key={team} team={team} match={match} />
-                      ))}
-                    </div>
-                  </td>
-                </tr>
-              )}
-            </Fragment>
-          );
-        })}
-      </tbody>
-    </table>
+    <>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <SortTh sorter={sorter} column="id">
+                ID
+              </SortTh>
+              <SortTh sorter={sorter} column="round" className="num">
+                Rodada
+              </SortTh>
+              <SortTh sorter={sorter} column="date">
+                Data
+              </SortTh>
+              <SortTh sorter={sorter} column="matchup">
+                Confronto
+              </SortTh>
+              <SortTh sorter={sorter} column="winner">
+                Vencedor (planilha)
+              </SortTh>
+              <SortTh sorter={sorter} column="check">
+                Site oficial
+              </SortTh>
+              <th className="expand-col" />
+            </tr>
+          </thead>
+          <tbody>
+            {page.rows.map((match) => {
+              const isOpen = open === match.externalId;
+              return (
+                <Fragment key={match.externalId}>
+                  <tr>
+                    <td>
+                      <strong>{match.externalId}</strong>
+                    </td>
+                    <td className="num">{match.round}</td>
+                    <td>{formatDate(match.playedOn)}</td>
+                    <td>
+                      {match.teamA} x {match.teamB}
+                    </td>
+                    <td>{match.winner ?? <span className="badge warning">sem resultado</span>}</td>
+                    <td>
+                      <CheckBadge check={checkById.get(match.externalId)} />
+                    </td>
+                    <td className="expand-col">
+                      <ExpandButton
+                        open={isOpen}
+                        onClick={() => setOpen(isOpen ? null : match.externalId)}
+                        label="jogadores da partida"
+                      />
+                    </td>
+                  </tr>
+                  {isOpen && (
+                    <tr className="details">
+                      <td colSpan={7}>
+                        <div className="teams">
+                          {[match.teamA, match.teamB].map((team) => (
+                            <TeamPlayers key={team} team={team} match={match} />
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <Pagination state={page} noun="partidas" />
+    </>
   );
 }
 

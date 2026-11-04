@@ -2,6 +2,7 @@ import { Fragment, useMemo, useState } from 'react';
 import { formatCents, formatPercent, normalizeSearch } from '../format';
 import type { PlayerPrize, PrizeBasis, TeamStanding } from '../types';
 import { ExpandButton } from './ExpandButton';
+import { Pagination, usePagination } from './Pagination';
 import { SortTh, useSort } from './Sortable';
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
   standings: TeamStanding[];
   basis: PrizeBasis;
 }
+
+const PAGE_SIZE = 20;
 
 const share = (part: number, total: number) => (total > 0 ? (part / total) * 100 : 0);
 
@@ -33,6 +36,8 @@ export function PlayerPrizes({ players, standings, basis }: Props) {
     byKills: (p) => p.prizeByKills,
   });
 
+  const page = usePagination(rows, PAGE_SIZE, `${search}|${sorter.sort?.key}|${sorter.sort?.dir}`);
+
   const teamPrize = new Map(standings.map((s) => [s.team, s]));
   const key = (p: PlayerPrize) => `${p.team}/${p.nick}`;
 
@@ -51,75 +56,86 @@ export function PlayerPrizes({ players, standings, basis }: Props) {
         </span>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <SortTh sorter={sorter} column="nick">
-              Jogador
-            </SortTh>
-            <SortTh sorter={sorter} column="team">
-              Time
-            </SortTh>
-            <SortTh sorter={sorter} column="position" className="num">
-              Coloc.
-            </SortTh>
-            <SortTh sorter={sorter} column="minutes" className="num">
-              Minutos
-            </SortTh>
-            <SortTh sorter={sorter} column="kills" className="num">
-              Kills
-            </SortTh>
-            <SortTh sorter={sorter} column="byMinutes" className={`num ${basis === 'minutes' ? 'active-col' : ''}`}>
-              Por minutos
-            </SortTh>
-            <SortTh sorter={sorter} column="byKills" className={`num ${basis === 'kills' ? 'active-col' : ''}`}>
-              Por kills
-            </SortTh>
-            <th className="expand-col" />
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((p) => {
-            const isOpen = open === key(p);
-            return (
-              <Fragment key={key(p)}>
-                <tr>
-                  <td>
-                    <strong>{p.nick}</strong>
-                  </td>
-                  <td>{p.team}</td>
-                  <td className="num">{p.position}º</td>
-                  <td className="num">
-                    {p.minutes} <span className="muted">({formatPercent(share(p.minutes, p.teamMinutes))})</span>
-                  </td>
-                  <td className="num">
-                    {p.kills} <span className="muted">({formatPercent(share(p.kills, p.teamKills))})</span>
-                  </td>
-                  <td className={`num ${basis === 'minutes' ? 'active-col' : 'muted'}`}>{formatCents(p.prizeByMinutes)}</td>
-                  <td className={`num ${basis === 'kills' ? 'active-col' : 'muted'}`}>{formatCents(p.prizeByKills)}</td>
-                  <td className="expand-col">
-                    <ExpandButton open={isOpen} onClick={() => setOpen(isOpen ? null : key(p))} label="explicação do cálculo" />
-                  </td>
-                </tr>
-                {isOpen && (
-                  <tr className="details">
-                    <td colSpan={8}>
-                      <Explanation player={p} team={teamPrize.get(p.team)} basis={basis} />
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <SortTh sorter={sorter} column="nick">
+                Jogador
+              </SortTh>
+              <SortTh sorter={sorter} column="team">
+                Time
+              </SortTh>
+              <SortTh sorter={sorter} column="position" className="num">
+                Coloc.
+              </SortTh>
+              <SortTh sorter={sorter} column="minutes" className="num">
+                Minutos
+              </SortTh>
+              <SortTh sorter={sorter} column="kills" className="num">
+                Kills
+              </SortTh>
+              <SortTh sorter={sorter} column="byMinutes" className={`num ${basis === 'minutes' ? 'active-col' : ''}`}>
+                Por minutos
+              </SortTh>
+              <SortTh sorter={sorter} column="byKills" className={`num ${basis === 'kills' ? 'active-col' : ''}`}>
+                Por kills
+              </SortTh>
+              <th className="expand-col" />
+            </tr>
+          </thead>
+          <tbody>
+            {page.rows.map((p) => {
+              const isOpen = open === key(p);
+              return (
+                <Fragment key={key(p)}>
+                  <tr>
+                    <td>
+                      <strong>{p.nick}</strong>
+                    </td>
+                    <td>{p.team}</td>
+                    <td className="num">{p.position}º</td>
+                    <td className="num">
+                      {p.minutes} <span className="muted">({formatPercent(share(p.minutes, p.teamMinutes))})</span>
+                    </td>
+                    <td className="num">
+                      {p.kills} <span className="muted">({formatPercent(share(p.kills, p.teamKills))})</span>
+                    </td>
+                    <td className={`num ${basis === 'minutes' ? 'active-col' : 'muted'}`}>
+                      {formatCents(p.prizeByMinutes)}
+                    </td>
+                    <td className={`num ${basis === 'kills' ? 'active-col' : 'muted'}`}>
+                      {formatCents(p.prizeByKills)}
+                    </td>
+                    <td className="expand-col">
+                      <ExpandButton
+                        open={isOpen}
+                        onClick={() => setOpen(isOpen ? null : key(p))}
+                        label="explicação do cálculo"
+                      />
                     </td>
                   </tr>
-                )}
-              </Fragment>
-            );
-          })}
-          {!visible.length && (
-            <tr>
-              <td colSpan={8} className="muted">
-                Nenhum jogador encontrado.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+                  {isOpen && (
+                    <tr className="details">
+                      <td colSpan={8}>
+                        <Explanation player={p} team={teamPrize.get(p.team)} basis={basis} />
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              );
+            })}
+            {!visible.length && (
+              <tr>
+                <td colSpan={8} className="muted">
+                  Nenhum jogador encontrado.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      <Pagination state={page} noun="jogadores" />
     </>
   );
 }
@@ -140,13 +156,14 @@ function Explanation({ player, team, basis }: { player: PlayerPrize; team?: Team
     basis === 'minutes'
       ? `jogou ${player.minutes} dos ${player.teamMinutes} minutos do time`
       : `fez ${player.kills} das ${player.teamKills} kills do time`;
-  const percent = basis === 'minutes' ? share(player.minutes, player.teamMinutes) : share(player.kills, player.teamKills);
+  const percent =
+    basis === 'minutes' ? share(player.minutes, player.teamMinutes) : share(player.kills, player.teamKills);
   return (
     <p>
       {player.team} terminou em {team.position}º lugar{team.sharedPosition && ' (empatado)'} e ficou com{' '}
       <strong>{formatCents(team.prizeCents)}</strong> ({formatPercent(team.prizePercent)} do prêmio). O valor do time é
-      dividido {basis === 'minutes' ? 'pelos minutos jogados' : 'pelas kills'} de cada jogador no torneio:{' '}
-      {player.nick} {detail} ({formatPercent(percent)}), em {player.matches} partida{player.matches === 1 ? '' : 's'}, e recebe{' '}
+      dividido {basis === 'minutes' ? 'pelos minutos jogados' : 'pelas kills'} de cada jogador no torneio: {player.nick}{' '}
+      {detail} ({formatPercent(percent)}), em {player.matches} partida{player.matches === 1 ? '' : 's'}, e recebe{' '}
       <strong>{formatCents(player.prizeCents)}</strong>.
     </p>
   );

@@ -33,36 +33,38 @@ export function ImportReport({ issues }: { issues: ImportIssue[] }) {
         ))}
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <SortTh sorter={sorter} column="severity">
-              Tipo
-            </SortTh>
-            <SortTh sorter={sorter} column="line" className="num">
-              Linha
-            </SortTh>
-            <SortTh sorter={sorter} column="match">
-              Partida
-            </SortTh>
-            <SortTh sorter={sorter} column="message">
-              O que aconteceu
-            </SortTh>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((issue, index) => (
-            <tr key={index}>
-              <td>
-                <span className={`badge ${issue.severity}`}>{SEVERITY_LABEL[issue.severity].one}</span>
-              </td>
-              <td className="num">{issue.line ?? '—'}</td>
-              <td>{issue.matchId ?? '—'}</td>
-              <td>{issue.message}</td>
+      <div className="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <SortTh sorter={sorter} column="severity">
+                Tipo
+              </SortTh>
+              <SortTh sorter={sorter} column="line" className="num">
+                Linha
+              </SortTh>
+              <SortTh sorter={sorter} column="match">
+                Partida
+              </SortTh>
+              <SortTh sorter={sorter} column="message">
+                O que aconteceu
+              </SortTh>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {rows.map((issue, index) => (
+              <tr key={index}>
+                <td>
+                  <span className={`badge ${issue.severity}`}>{SEVERITY_LABEL[issue.severity].one}</span>
+                </td>
+                <td className="num">{issue.line ?? '—'}</td>
+                <td>{issue.matchId ?? '—'}</td>
+                <td>{issue.message}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

@@ -86,7 +86,7 @@ export function OfficialCheck({ checks, error, onRetry }: Props) {
         </span>
       </div>
 
-      <div className="badges">
+      <div className="badges check-counts">
         {STATUS_ORDER.filter((status) => counts[status] > 0).map((status) => (
           <span key={status} className={`badge ${CHECK_LABEL[status].badge}`}>
             {counts[status]} {CHECK_LABEL[status].text.toLowerCase()}
@@ -113,74 +113,78 @@ export function OfficialCheck({ checks, error, onRetry }: Props) {
       {discrepancies.length > 0 && (
         <>
           <h3>O que não bateu</h3>
-          <table>
-            <thead>
-              <tr>
-                <SortTh sorter={divergenceSort.sorter} column="match">
-                  Partida
-                </SortTh>
-                <SortTh sorter={divergenceSort.sorter} column="message">
-                  Divergência
-                </SortTh>
-                <SortTh sorter={divergenceSort.sorter} column="sheet">
-                  Planilha
-                </SortTh>
-                <SortTh sorter={divergenceSort.sorter} column="site">
-                  Site oficial
-                </SortTh>
-              </tr>
-            </thead>
-            <tbody>
-              {divergenceSort.rows.map((d) => (
-                <tr key={`${d.externalId}-${d.code}-${d.nick ?? ''}`}>
-                  <td>{d.externalId}</td>
-                  <td>{d.message}</td>
-                  <td>{d.sheetValue ?? '—'}</td>
-                  <td>{d.officialValue ?? '—'}</td>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <SortTh sorter={divergenceSort.sorter} column="match">
+                    Partida
+                  </SortTh>
+                  <SortTh sorter={divergenceSort.sorter} column="message">
+                    Divergência
+                  </SortTh>
+                  <SortTh sorter={divergenceSort.sorter} column="sheet">
+                    Planilha
+                  </SortTh>
+                  <SortTh sorter={divergenceSort.sorter} column="site">
+                    Site oficial
+                  </SortTh>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {divergenceSort.rows.map((d) => (
+                  <tr key={`${d.externalId}-${d.code}-${d.nick ?? ''}`}>
+                    <td>{d.externalId}</td>
+                    <td>{d.message}</td>
+                    <td>{d.sheetValue ?? '—'}</td>
+                    <td>{d.officialValue ?? '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </>
       )}
 
       {problems.length > 0 && (
         <>
           <h3>Não conferidas</h3>
-          <table>
-            <thead>
-              <tr>
-                <SortTh sorter={problemSort.sorter} column="match">
-                  Partida
-                </SortTh>
-                <SortTh sorter={problemSort.sorter} column="status">
-                  Situação
-                </SortTh>
-                <SortTh sorter={problemSort.sorter} column="attempts" className="num">
-                  Tentativas
-                </SortTh>
-                <SortTh sorter={problemSort.sorter} column="detail">
-                  Detalhe
-                </SortTh>
-              </tr>
-            </thead>
-            <tbody>
-              {problemSort.rows.map((match) => (
-                <tr key={match.externalId}>
-                  <td>{match.externalId}</td>
-                  <td>
-                    <CheckBadge check={match} />
-                  </td>
-                  <td className="num">{match.attempts}</td>
-                  <td>
-                    {match.status === 'not_found'
-                      ? 'O site não tem partida com esse ID. Confira se o código foi copiado certo.'
-                      : match.lastError}
-                  </td>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <SortTh sorter={problemSort.sorter} column="match">
+                    Partida
+                  </SortTh>
+                  <SortTh sorter={problemSort.sorter} column="status">
+                    Situação
+                  </SortTh>
+                  <SortTh sorter={problemSort.sorter} column="attempts" className="num">
+                    Tentativas
+                  </SortTh>
+                  <SortTh sorter={problemSort.sorter} column="detail">
+                    Detalhe
+                  </SortTh>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {problemSort.rows.map((match) => (
+                  <tr key={match.externalId}>
+                    <td>{match.externalId}</td>
+                    <td>
+                      <CheckBadge check={match} />
+                    </td>
+                    <td className="num">{match.attempts}</td>
+                    <td>
+                      {match.status === 'not_found'
+                        ? 'O site não tem partida com esse ID. Confira se o código foi copiado certo.'
+                        : match.lastError}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </>
       )}
     </>
