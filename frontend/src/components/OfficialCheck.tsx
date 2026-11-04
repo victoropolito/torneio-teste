@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import type { CheckStatus, MatchCheck, TournamentChecks } from '../types';
+import type { CheckStatus, Discrepancy, MatchCheck, TournamentChecks } from '../types';
+import { SortTh, useSort } from './Sortable';
 
 export const CHECK_LABEL: Record<CheckStatus, { text: string; badge: string }> = {
   pending: { text: 'Na fila', badge: 'info' },
@@ -33,13 +34,33 @@ export function OfficialCheck({ checks, error, onRetry }: Props) {
   const [retrying, setRetrying] = useState(false);
   const [retryError, setRetryError] = useState<string | null>(null);
 
+  const matches = checks?.matches ?? [];
+  const discrepancies = matches
+    .filter((m) => m.status === 'divergent')
+    .flatMap((m) => m.discrepancies.map((d) => ({ ...d, externalId: m.externalId })));
+  const problems = matches.filter((m) => m.status === 'not_found' || m.status === 'failed' || m.lastError);
+
+  const divergenceSort = useSort<Discrepancy & { externalId: string }, 'match' | 'message' | 'sheet' | 'site'>(
+    discrepancies,
+    {
+      match: (d) => d.externalId,
+      message: (d) => d.message,
+      sheet: (d) => d.sheetValue,
+      site: (d) => d.officialValue,
+    },
+  );
+  const problemSort = useSort<MatchCheck, 'match' | 'status' | 'attempts' | 'detail'>(problems, {
+    match: (m) => m.externalId,
+    status: (m) => CHECK_LABEL[m.status].text,
+    attempts: (m) => m.attempts,
+    detail: (m) => m.lastError,
+  });
+
   if (!checks) return <p className="muted">{error ?? 'Carregando…'}</p>;
 
   const { counts, total, finished } = checks;
   const done = total - counts.pending - counts.running;
   const unresolved = counts.failed + counts.not_found;
-  const divergent = checks.matches.filter((m) => m.status === 'divergent');
-  const problems = checks.matches.filter((m) => m.status === 'not_found' || m.status === 'failed' || m.lastError);
 
   const retry = async () => {
     setRetrying(true);
@@ -89,29 +110,35 @@ export function OfficialCheck({ checks, error, onRetry }: Props) {
         </p>
       )}
 
-      {divergent.length > 0 && (
+      {discrepancies.length > 0 && (
         <>
           <h3>O que não bateu</h3>
           <table>
             <thead>
               <tr>
-                <th>Partida</th>
-                <th>Divergência</th>
-                <th>Planilha</th>
-                <th>Site oficial</th>
+                <SortTh sorter={divergenceSort.sorter} column="match">
+                  Partida
+                </SortTh>
+                <SortTh sorter={divergenceSort.sorter} column="message">
+                  Divergência
+                </SortTh>
+                <SortTh sorter={divergenceSort.sorter} column="sheet">
+                  Planilha
+                </SortTh>
+                <SortTh sorter={divergenceSort.sorter} column="site">
+                  Site oficial
+                </SortTh>
               </tr>
             </thead>
             <tbody>
-              {divergent.flatMap((match) =>
-                match.discrepancies.map((d, index) => (
-                  <tr key={`${match.externalId}-${index}`}>
-                    <td>{index === 0 ? match.externalId : ''}</td>
-                    <td>{d.message}</td>
-                    <td>{d.sheetValue ?? '—'}</td>
-                    <td>{d.officialValue ?? '—'}</td>
-                  </tr>
-                )),
-              )}
+              {divergenceSort.rows.map((d) => (
+                <tr key={`${d.externalId}-${d.code}-${d.nick ?? ''}`}>
+                  <td>{d.externalId}</td>
+                  <td>{d.message}</td>
+                  <td>{d.sheetValue ?? '—'}</td>
+                  <td>{d.officialValue ?? '—'}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </>
@@ -123,14 +150,22 @@ export function OfficialCheck({ checks, error, onRetry }: Props) {
           <table>
             <thead>
               <tr>
-                <th>Partida</th>
-                <th>Situação</th>
-                <th className="num">Tentativas</th>
-                <th>Detalhe</th>
+                <SortTh sorter={problemSort.sorter} column="match">
+                  Partida
+                </SortTh>
+                <SortTh sorter={problemSort.sorter} column="status">
+                  Situação
+                </SortTh>
+                <SortTh sorter={problemSort.sorter} column="attempts" className="num">
+                  Tentativas
+                </SortTh>
+                <SortTh sorter={problemSort.sorter} column="detail">
+                  Detalhe
+                </SortTh>
               </tr>
             </thead>
             <tbody>
-              {problems.map((match) => (
+              {problemSort.rows.map((match) => (
                 <tr key={match.externalId}>
                   <td>{match.externalId}</td>
                   <td>

@@ -1,5 +1,6 @@
 import { formatCents, formatPercent } from '../format';
 import type { TeamStanding, Tiebreak } from '../types';
+import { SortTh, useSort } from './Sortable';
 
 export const TIEBREAK_LABEL: Record<Tiebreak, string> = {
   head_to_head: 'confronto direto',
@@ -9,24 +10,50 @@ export const TIEBREAK_LABEL: Record<Tiebreak, string> = {
 
 export function Standings({ standings }: { standings: TeamStanding[] }) {
   const hasSharedPosition = standings.some((s) => s.sharedPosition);
+  const { rows, sorter } = useSort(standings, {
+    position: (s) => -s.position,
+    team: (s) => s.team,
+    wins: (s) => s.wins,
+    losses: (s) => s.losses,
+    balance: (s) => s.killBalance,
+    players: (s) => s.playersUsed,
+    tiebreak: (s) => (s.tiebreak ? TIEBREAK_LABEL[s.tiebreak] : s.sharedPosition ? 'empate total' : null),
+    prize: (s) => s.prizeCents,
+  });
 
   return (
     <>
       <table>
         <thead>
           <tr>
-            <th className="num">Pos.</th>
-            <th>Time</th>
-            <th className="num">Vitórias</th>
-            <th className="num">Derrotas</th>
-            <th className="num">Saldo de kills</th>
-            <th className="num">Jogadores</th>
-            <th>Desempate</th>
-            <th className="num">Prêmio do time</th>
+            <SortTh sorter={sorter} column="position" className="num">
+              Pos.
+            </SortTh>
+            <SortTh sorter={sorter} column="team">
+              Time
+            </SortTh>
+            <SortTh sorter={sorter} column="wins" className="num">
+              Vitórias
+            </SortTh>
+            <SortTh sorter={sorter} column="losses" className="num">
+              Derrotas
+            </SortTh>
+            <SortTh sorter={sorter} column="balance" className="num">
+              Saldo de kills
+            </SortTh>
+            <SortTh sorter={sorter} column="players" className="num">
+              Jogadores
+            </SortTh>
+            <SortTh sorter={sorter} column="tiebreak">
+              Desempate
+            </SortTh>
+            <SortTh sorter={sorter} column="prize" className="num">
+              Prêmio do time
+            </SortTh>
           </tr>
         </thead>
         <tbody>
-          {standings.map((s) => (
+          {rows.map((s) => (
             <tr key={s.team}>
               <td className="num">
                 {s.position}º{s.sharedPosition && '*'}

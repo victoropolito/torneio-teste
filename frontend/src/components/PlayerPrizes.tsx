@@ -1,6 +1,8 @@
 import { Fragment, useMemo, useState } from 'react';
 import { formatCents, formatPercent, normalizeSearch } from '../format';
 import type { PlayerPrize, PrizeBasis, TeamStanding } from '../types';
+import { ExpandButton } from './ExpandButton';
+import { SortTh, useSort } from './Sortable';
 
 interface Props {
   players: PlayerPrize[];
@@ -20,6 +22,16 @@ export function PlayerPrizes({ players, standings, basis }: Props) {
       .filter((p) => !term || normalizeSearch(p.nick).includes(term) || normalizeSearch(p.team).includes(term))
       .sort((a, b) => b.prizeCents - a.prizeCents || a.position - b.position || a.nick.localeCompare(b.nick));
   }, [players, search]);
+
+  const { rows, sorter } = useSort(visible, {
+    nick: (p) => p.nick,
+    team: (p) => p.team,
+    position: (p) => -p.position, // "maior" = melhor colocação
+    minutes: (p) => p.minutes,
+    kills: (p) => p.kills,
+    byMinutes: (p) => p.prizeByMinutes,
+    byKills: (p) => p.prizeByKills,
+  });
 
   const teamPrize = new Map(standings.map((s) => [s.team, s]));
   const key = (p: PlayerPrize) => `${p.team}/${p.nick}`;
@@ -42,17 +54,32 @@ export function PlayerPrizes({ players, standings, basis }: Props) {
       <table>
         <thead>
           <tr>
-            <th>Jogador</th>
-            <th>Time</th>
-            <th className="num">Minutos</th>
-            <th className="num">Kills</th>
-            <th className={`num ${basis === 'minutes' ? 'active-col' : ''}`}>Por minutos</th>
-            <th className={`num ${basis === 'kills' ? 'active-col' : ''}`}>Por kills</th>
-            <th />
+            <SortTh sorter={sorter} column="nick">
+              Jogador
+            </SortTh>
+            <SortTh sorter={sorter} column="team">
+              Time
+            </SortTh>
+            <SortTh sorter={sorter} column="position" className="num">
+              Coloc.
+            </SortTh>
+            <SortTh sorter={sorter} column="minutes" className="num">
+              Minutos
+            </SortTh>
+            <SortTh sorter={sorter} column="kills" className="num">
+              Kills
+            </SortTh>
+            <SortTh sorter={sorter} column="byMinutes" className={`num ${basis === 'minutes' ? 'active-col' : ''}`}>
+              Por minutos
+            </SortTh>
+            <SortTh sorter={sorter} column="byKills" className={`num ${basis === 'kills' ? 'active-col' : ''}`}>
+              Por kills
+            </SortTh>
+            <th className="expand-col" />
           </tr>
         </thead>
         <tbody>
-          {visible.map((p) => {
+          {rows.map((p) => {
             const isOpen = open === key(p);
             return (
               <Fragment key={key(p)}>
@@ -60,9 +87,8 @@ export function PlayerPrizes({ players, standings, basis }: Props) {
                   <td>
                     <strong>{p.nick}</strong>
                   </td>
-                  <td>
-                    {p.team} <span className="muted">({p.position}º)</span>
-                  </td>
+                  <td>{p.team}</td>
+                  <td className="num">{p.position}º</td>
                   <td className="num">
                     {p.minutes} <span className="muted">({formatPercent(share(p.minutes, p.teamMinutes))})</span>
                   </td>
@@ -71,15 +97,13 @@ export function PlayerPrizes({ players, standings, basis }: Props) {
                   </td>
                   <td className={`num ${basis === 'minutes' ? 'active-col' : 'muted'}`}>{formatCents(p.prizeByMinutes)}</td>
                   <td className={`num ${basis === 'kills' ? 'active-col' : 'muted'}`}>{formatCents(p.prizeByKills)}</td>
-                  <td>
-                    <button className="link" onClick={() => setOpen(isOpen ? null : key(p))}>
-                      {isOpen ? 'ocultar' : 'por quê?'}
-                    </button>
+                  <td className="expand-col">
+                    <ExpandButton open={isOpen} onClick={() => setOpen(isOpen ? null : key(p))} label="explicação do cálculo" />
                   </td>
                 </tr>
                 {isOpen && (
                   <tr className="details">
-                    <td colSpan={7}>
+                    <td colSpan={8}>
                       <Explanation player={p} team={teamPrize.get(p.team)} basis={basis} />
                     </td>
                   </tr>
@@ -89,7 +113,7 @@ export function PlayerPrizes({ players, standings, basis }: Props) {
           })}
           {!visible.length && (
             <tr>
-              <td colSpan={7} className="muted">
+              <td colSpan={8} className="muted">
                 Nenhum jogador encontrado.
               </td>
             </tr>

@@ -200,6 +200,7 @@ button.link {
 .upload-form input[type='text'],
 .upload-form input[type='number'] {
   font: inherit;
+  font-weight: 400;
   padding: 7px 10px;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -317,4 +318,128 @@ th.active-col,
 td.active-col {
   background: #eef2ff;
   font-weight: 600;
+}
+
+/* Cursores: o que é clicável mostra a "mãozinha"; campos de digitação, o cursor de texto */
+input[type='file'],
+input[type='radio'],
+input[type='checkbox'],
+select,
+label:has(> input[type='radio']),
+label:has(> input[type='checkbox']),
+.file-picker {
+  cursor: pointer;
+}
+input[type='text'],
+input[type='number'],
+input[type='search'] {
+  cursor: text;
+}
+input:disabled,
+label:has(> input:disabled) {
+  cursor: not-allowed;
+}
+
+/* Seletor de arquivo próprio (o texto nativo do navegador não é estilizável) */
+.upload-form .field {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.upload-form .file-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  font-weight: 400;
+}
+.file-picker input[type='file'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+.file-button {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color 0.15s, background 0.15s;
+}
+.file-picker:hover .file-button {
+  border-color: var(--primary);
+  background: #eef2ff;
+}
+.file-picker:has(input:focus-visible) .file-button {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Cabeçalho ordenável */
+th:has(> button.sort) {
+  padding: 0;
+}
+button.sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+}
+th.num > button.sort {
+  justify-content: flex-end;
+}
+button.sort:hover,
+button.sort.active {
+  color: var(--text);
+}
+.sort-icon {
+  font-size: 0.7em;
+  opacity: 0.35;
+}
+button.sort.active .sort-icon {
+  opacity: 1;
+  color: var(--primary);
+}
+
+/* Botão de expandir linha */
+.expand-col {
+  width: 36px;
+  text-align: center;
+}
+button.expand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--muted);
+}
+button.expand:hover {
+  color: var(--primary);
+  background: #eef2ff;
+}
+button.expand svg {
+  transition: transform 0.15s;
+}
+button.expand.open svg {
+  transform: rotate(180deg);
 }

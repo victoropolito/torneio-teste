@@ -1,34 +1,63 @@
 import { Fragment, useState } from 'react';
 import { formatDate } from '../format';
 import type { Match, MatchCheck } from '../types';
-import { CheckBadge } from './OfficialCheck';
+import { ExpandButton } from './ExpandButton';
+import { CHECK_LABEL, CheckBadge } from './OfficialCheck';
+import { SortTh, useSort } from './Sortable';
 
 export function MatchList({ matches, checks }: { matches: Match[]; checks: MatchCheck[] }) {
   const [open, setOpen] = useState<string | null>(null);
   const checkById = new Map(checks.map((check) => [check.externalId, check]));
+  const checkStatus = (match: Match) => {
+    const check = checkById.get(match.externalId);
+    return check ? CHECK_LABEL[check.status].text : null;
+  };
+
+  const { rows, sorter } = useSort(matches, {
+    id: (m) => m.externalId,
+    round: (m) => -m.round, // primeiro clique: rodada 1 primeiro
+    date: (m) => m.playedOn,
+    matchup: (m) => `${m.teamA} x ${m.teamB}`,
+    winner: (m) => m.winner,
+    check: checkStatus,
+  });
 
   return (
     <table>
       <thead>
         <tr>
-          <th className="num">Rodada</th>
-          <th>Data</th>
-          <th>ID</th>
-          <th>Confronto</th>
-          <th>Vencedor (planilha)</th>
-          <th>Site oficial</th>
-          <th />
+          <SortTh sorter={sorter} column="id">
+            ID
+          </SortTh>
+          <SortTh sorter={sorter} column="round" className="num">
+            Rodada
+          </SortTh>
+          <SortTh sorter={sorter} column="date">
+            Data
+          </SortTh>
+          <SortTh sorter={sorter} column="matchup">
+            Confronto
+          </SortTh>
+          <SortTh sorter={sorter} column="winner">
+            Vencedor (planilha)
+          </SortTh>
+          <SortTh sorter={sorter} column="check">
+            Site oficial
+          </SortTh>
+          <th className="expand-col" />
         </tr>
       </thead>
       <tbody>
-        {matches.map((match) => {
+        {rows.map((match) => {
           const isOpen = open === match.externalId;
           return (
             <Fragment key={match.externalId}>
               <tr>
+                <td>
+                  <strong>{match.externalId}</strong>
+                </td>
                 <td className="num">{match.round}</td>
                 <td>{formatDate(match.playedOn)}</td>
-                <td>{match.externalId}</td>
                 <td>
                   {match.teamA} x {match.teamB}
                 </td>
@@ -36,10 +65,12 @@ export function MatchList({ matches, checks }: { matches: Match[]; checks: Match
                 <td>
                   <CheckBadge check={checkById.get(match.externalId)} />
                 </td>
-                <td>
-                  <button className="link" onClick={() => setOpen(isOpen ? null : match.externalId)}>
-                    {isOpen ? 'ocultar' : 'jogadores'}
-                  </button>
+                <td className="expand-col">
+                  <ExpandButton
+                    open={isOpen}
+                    onClick={() => setOpen(isOpen ? null : match.externalId)}
+                    label="jogadores da partida"
+                  />
                 </td>
               </tr>
               {isOpen && (
