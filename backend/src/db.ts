@@ -14,6 +14,7 @@ db.exec(`
     source_filename   TEXT    NOT NULL,
     prize_total_cents INTEGER NOT NULL,
     prize_split       TEXT    NOT NULL, -- JSON: percentuais por colocação, ex.: [50,30,20]
+    prize_basis       TEXT    NOT NULL DEFAULT 'minutes' CHECK (prize_basis IN ('minutes', 'kills')),
     created_at        TEXT    NOT NULL DEFAULT (datetime('now'))
   );
 
@@ -74,3 +75,10 @@ db.exec(`
   -- Torneios importados antes da Entrega 3 também entram na fila.
   INSERT OR IGNORE INTO match_checks (match_id) SELECT id FROM matches;
 `);
+
+// Migração: bancos criados antes da Entrega 4 não têm prize_basis.
+const tournamentColumns = db.prepare(`PRAGMA table_info(tournaments)`).all() as { name: string }[];
+if (!tournamentColumns.some((column) => column.name === 'prize_basis')) {
+  db.exec(`ALTER TABLE tournaments ADD COLUMN prize_basis TEXT NOT NULL DEFAULT 'minutes'
+           CHECK (prize_basis IN ('minutes', 'kills'))`);
+}

@@ -1,5 +1,6 @@
 import { db } from '../db.js';
 import type { ImportIssue, ImportResult, ParsedPlayer, Severity } from '../import/validate.js';
+import type { PrizeBasis } from '../results/calculate.js';
 
 export interface NewTournament {
   name: string;
@@ -14,6 +15,7 @@ export interface TournamentSummary {
   sourceFilename: string;
   prizeTotalCents: number;
   prizeSplit: number[];
+  prizeBasis: PrizeBasis;
   createdAt: string;
   matchCount: number;
   issueCounts: Record<Severity, number>;
@@ -40,6 +42,7 @@ interface TournamentRow {
   source_filename: string;
   prize_total_cents: number;
   prize_split: string;
+  prize_basis: PrizeBasis;
   created_at: string;
   match_count: number;
   errors: number;
@@ -63,6 +66,7 @@ function toSummary(row: TournamentRow): TournamentSummary {
     sourceFilename: row.source_filename,
     prizeTotalCents: row.prize_total_cents,
     prizeSplit: JSON.parse(row.prize_split) as number[],
+    prizeBasis: row.prize_basis,
     createdAt: row.created_at,
     matchCount: row.match_count,
     issueCounts: { error: row.errors, warning: row.warnings, info: row.infos },
@@ -107,6 +111,10 @@ export const createTournament = db.transaction((input: NewTournament, result: Im
 
   return tournamentId;
 });
+
+export function setPrizeBasis(id: number, basis: PrizeBasis): void {
+  db.prepare(`UPDATE tournaments SET prize_basis = ? WHERE id = ?`).run(basis, id);
+}
 
 export function listTournaments(): TournamentSummary[] {
   const rows = db.prepare(`${SUMMARY_SQL} ORDER BY t.id DESC`).all() as TournamentRow[];

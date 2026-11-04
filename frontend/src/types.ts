@@ -31,6 +31,7 @@ export interface TournamentSummary {
   sourceFilename: string;
   prizeTotalCents: number;
   prizeSplit: number[];
+  prizeBasis: PrizeBasis;
   createdAt: string;
   matchCount: number;
   issueCounts: Record<Severity, number>;
@@ -66,4 +67,48 @@ export interface TournamentChecks {
   total: number;
   finished: boolean;
   matches: MatchCheck[];
+}
+
+export type PrizeBasis = 'minutes' | 'kills';
+
+export type Tiebreak = 'head_to_head' | 'kill_balance' | 'fewer_players';
+
+export interface TeamStanding {
+  team: string;
+  position: number;
+  sharedPosition: boolean;
+  tiebreak: Tiebreak | null;
+  played: number;
+  wins: number;
+  losses: number;
+  killsFor: number;
+  killsAgainst: number;
+  killBalance: number;
+  playersUsed: number;
+  prizePercent: number;
+  prizeCents: number;
+}
+
+export interface PlayerPrize {
+  nick: string;
+  team: string;
+  position: number;
+  matches: number;
+  minutes: number;
+  kills: number;
+  teamMinutes: number;
+  teamKills: number;
+  prizeByMinutes: number;
+  prizeByKills: number;
+  prizeCents: number;
+}
+
+export interface TournamentResults {
+  basis: PrizeBasis;
+  prizeTotalCents: number;
+  provisional: boolean;
+  pendingMatches: { externalId: string; reason: string }[];
+  sources: { official: number; sheet: number };
+  standings: TeamStanding[];
+  players: PlayerPrize[];
 }

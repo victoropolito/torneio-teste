@@ -4,6 +4,7 @@ import { ImportReport } from '../components/ImportReport';
 import { IssueBadges } from '../components/IssueBadges';
 import { MatchList } from '../components/MatchList';
 import { OfficialCheck } from '../components/OfficialCheck';
+import { Results } from '../components/Results';
 import { formatCents, formatDateTime } from '../format';
 import type { TournamentDetail } from '../types';
 import { useChecks } from '../useChecks';
@@ -12,6 +13,9 @@ export function TournamentPage({ id }: { id: number }) {
   const [tournament, setTournament] = useState<TournamentDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const checks = useChecks(id);
+  // Recalcula os prêmios a cada partida conferida.
+  const counts = checks.checks?.counts;
+  const resultsKey = counts ? Object.values(counts).join('-') : '';
 
   useEffect(() => {
     setTournament(null);
@@ -58,6 +62,11 @@ export function TournamentPage({ id }: { id: number }) {
             </dd>
           </div>
         </dl>
+      </section>
+
+      <section className="card">
+        <h2>Prêmios</h2>
+        <Results tournamentId={id} refreshKey={resultsKey} />
       </section>
 
       <section className="card">

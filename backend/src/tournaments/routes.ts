@@ -6,7 +6,9 @@ import { readCsv } from '../import/csv.js';
 import { validateSheet } from '../import/validate.js';
 import { getTournamentChecks, requeueUnresolved } from '../official/repository.js';
 import { wakeCheckWorker } from '../official/worker.js';
-import { createTournament, getTournament, listTournaments } from './repository.js';
+import type { PrizeBasis } from '../results/calculate.js';
+import { getResults, PRIZE_BASES } from '../results/service.js';
+import { createTournament, getTournament, listTournaments, setPrizeBasis } from './repository.js';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 2 * 1024 * 1024 } });
 
@@ -50,6 +52,23 @@ function findTournament(idParam: string) {
 }
 
 tournamentsRouter.get('/:id', (req, res) => {
+  res.json(findTournament(req.params.id));
+});
+
+/** Classificação e prêmio de cada jogador (com os valores pelos dois critérios). */
+tournamentsRouter.get('/:id/results', (req, res) => {
+  const t = findTournament(req.params.id);
+  res.json(getResults(t.id, t.prizeBasis, t.prizeTotalCents, t.prizeSplit));
+});
+
+/** Altera configurações do torneio. Hoje só o critério de divisão: { prizeBasis: "minutes" | "kills" }. */
+tournamentsRouter.patch('/:id', (req, res) => {
+  const t = findTournament(req.params.id);
+  const basis = req.body?.prizeBasis as PrizeBasis;
+  if (!PRIZE_BASES.includes(basis)) {
+    throw new AppError('prizeBasis deve ser "minutes" ou "kills".');
+  }
+  setPrizeBasis(t.id, basis);
   res.json(findTournament(req.params.id));
 });
 
