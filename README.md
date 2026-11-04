@@ -7,8 +7,6 @@ Sistema para a Maria Clara subir a planilha do torneio, ter cada partida conferi
 - **Classificação e prêmios**: classificação por vitórias com desempate (confronto direto → saldo de kills → menos jogadores utilizados → divisão igual). Prêmio por jogador por **minutos** ou por **kills**, com os dois valores lado a lado, busca por nick e, em cada jogador, uma explicação expansível com a conta escrita para responder. Todas as tabelas ordenam por coluna; jogadores e partidas são paginados.
 - **Site oficial simulado**: um serviço HTTP separado que demora de 2 a 10 s, às vezes cai e às vezes não responde. Tem divergências plantadas de propósito em relação à planilha.
 
-As decisões, as alternativas descartadas e o que ficou de fora estão em **[DECISIONS.md](DECISIONS.md)**.
-
 ## Como rodar
 
 Pré-requisito: **Node.js 22 ou superior** (testado no 24). Não precisa de Docker nem de banco instalado.
