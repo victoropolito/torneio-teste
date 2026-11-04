@@ -7,7 +7,7 @@ dist/
 *.db-shm
 .env
 *.log
-ARCHITECTURE.md
+DECISIONS.md
 PROGRESS.md
 Enunciado.docx
 torneio-setembro.csv
